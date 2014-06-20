@@ -47,6 +47,27 @@
     <servlet-name>LogoutServlet</servlet-name>
     <servlet-class>cn.edu.hbcit.servlet.LogoutServlet</servlet-class>
   </servlet>
+ <servlet>
+    <servlet-name>AddListenPlanServlet</servlet-name>
+    <servlet-class>cn.edu.hbcit.servlet.AddListenPlanServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SelectListenPlan</servlet-name>
+    <servlet-class>cn.edu.hbcit.servlet.SelectListenPlan</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SelectListenPlanById</servlet-name>
+    <servlet-class>cn.edu.hbcit.servlet.SelectListenPlanById</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SelectTeacherByCourse</servlet-name>
+    <servlet-class>cn.edu.hbcit.servlet.SelectTeacherByCourse</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UpdateListenPlan</servlet-name>
+    <servlet-class>cn.edu.hbcit.servlet.UpdateListenPlan</servlet-class>
+  </servlet>
+
 
 
 
@@ -100,6 +121,26 @@
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/servlet/LogoutServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddListenPlanServlet</servlet-name>
+    <url-pattern>/servlet/AddListenPlanServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SelectListenPlan</servlet-name>
+    <url-pattern>/servlet/SelectListenPlan</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SelectListenPlanById</servlet-name>
+    <url-pattern>/servlet/SelectListenPlanById</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SelectTeacherByCourse</servlet-name>
+    <url-pattern>/servlet/SelectTeacherByCourse</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateListenPlan</servlet-name>
+    <url-pattern>/servlet/UpdateListenPlan</url-pattern>
   </servlet-mapping>
 	<filter>
 		<filter-name>DruidWebStatFilter</filter-name>

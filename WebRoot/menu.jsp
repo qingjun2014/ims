@@ -55,7 +55,7 @@
                                     <li><a HREF="samples-files.html">期初教案</a></li>
                                     <li><a HREF="samples-files.html">期初教案首页</a></li>
                                     <li><a HREF="samples-files.html">授课计划</a></li>
-                                    <li><a HREF="samples-files.html">听课计划</a></li>
+                                    <li><a HREF="${pageContext.request.contextPath}/servlet/SelectListenPlan">听课计划</a></li>
 								</ul>
 							</li>
                             <li>
