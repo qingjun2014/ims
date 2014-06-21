@@ -15,7 +15,13 @@ import org.apache.log4j.Logger;
 import cn.edu.hbcit.pojo.Course;
 import cn.edu.hbcit.pojo.Listen_plan;
 import cn.edu.hbcit.pojo.Majors;
-
+	/**
+	 * 听课表相关
+	 * @author 青君
+	 * @version 1.0 
+	 * 创建时间：   2014/6.19  13:43
+	 * 最后一次修改时间   2014/6/21  14:55
+	 * */
 public class ListenPlanDao {
 	
 	protected final Logger log = Logger.getLogger(ListenPlanDao.class.getName());
@@ -62,10 +68,10 @@ public class ListenPlanDao {
 		Connection conn = Base.Connect();
 		Listen_plan listplan=new Listen_plan();
 		QueryRunner qr = new QueryRunner();
-		String sql ="SELECT tb_listen_plan.PK_listen_plan,tb_listen_plan.FK_users_listener,tb_listen_plan.section ,tb_listen_plan.FK_course_listen, tb_listen_plan.listen_date,tb_listen_plan.classes, tb_listen_plan.classroom FROM tb_listen_plan ";
+		String sql ="SELECT tb_listen_plan.PK_listen_plan,tb_listen_plan.FK_users_listener,tb_listen_plan.section ,tb_listen_plan.FK_course_listen, tb_listen_plan.listen_date,tb_listen_plan.classes, tb_listen_plan.classroom FROM tb_listen_plan ORDER BY PK_listen_plan DESC ";
 	
 		list = (ArrayList<Listen_plan>)qr.query(conn, sql, new BeanListHandler(Listen_plan.class));
-		log.debug("听课表记录查询成功，返回记录列表");
+		log.debug("听课表记录___查询成功");
 		DbUtils.closeQuietly(conn);//关闭连接
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
@@ -88,10 +94,10 @@ public class ListenPlanDao {
 		Connection conn = Base.Connect();
 		Listen_plan listplan=new Listen_plan();
 		QueryRunner qr = new QueryRunner();
-		String sql ="SELECT tb_listen_plan.FK_course_listen, tb_listen_plan.listen_date,tb_listen_plan.classes, tb_listen_plan.classroom FROM tb_listen_plan WHERE PK_listen_plan=? ";
+		String sql ="SELECT tb_listen_plan.PK_listen_plan, tb_listen_plan.FK_course_listen, tb_listen_plan.listen_date,tb_listen_plan.classes, tb_listen_plan.classroom FROM tb_listen_plan WHERE PK_listen_plan=? ";
 	
 		list = (ArrayList<Listen_plan>)qr.query(conn, sql, new BeanListHandler(Listen_plan.class),id);
-		log.debug("SelectListenPlanById()：id="+id);
+		log.debug("查询听课记录 By id="+id);
 		DbUtils.closeQuietly(conn);//关闭连接
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
@@ -102,7 +108,7 @@ public class ListenPlanDao {
 	}
 	
 	/**
-	 *修改听课记录by PK_listen_plan
+	 *修改听课记录    by PK_listen_plan
 	 * @param FK_course_listen
 	 * @param classroom
 	 * @param grade
@@ -118,7 +124,7 @@ public class ListenPlanDao {
 		QueryRunner qr = new QueryRunner();
 		String sql = "UPDATE tb_listen_plan SET  FK_course_listen=? , section=? , classroom=? , listen_date=? , classes=?  WHERE PK_listen_plan=? ";
 	
-		count = qr.update(conn, sql, FK_course_listen,section,classroom,grade,listen_date,PK_listen_plan);
+		count = qr.update(conn, sql, FK_course_listen,section,classroom,listen_date,grade,PK_listen_plan);
 		
 		log.debug( count+"个听课计划修改成功 ");
 		DbUtils.closeQuietly(conn);//关闭连接
@@ -131,4 +137,33 @@ public class ListenPlanDao {
 	}
 	return flag;
 }
+	/**
+	 * 删除
+	 * 根据编号
+	 * @param Pk_listen_plan
+	 * @return TURE OR FALSE
+	 * 
+	 * */
+	public boolean deleteListenPlanById(int id){
+		boolean flag=false;
+		int count=0;	
+		try {
+			Connection conn = Base.Connect();
+			QueryRunner qr = new QueryRunner();
+			String sql = "DELETE FROM tb_listen_plan WHERE PK_listen_plan=? ";
+			count = qr.update(conn, sql,id);
+			if(count>0){
+				flag=true;
+			}
+			log.debug(count+"个记录删除成功");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return flag;
+		
+	}
+	
+	
 	}

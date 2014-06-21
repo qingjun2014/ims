@@ -2,26 +2,21 @@ package cn.edu.hbcit.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
-
-import cn.edu.hbcit.dao.CourseDao;
 import cn.edu.hbcit.dao.ListenPlanDao;
-import cn.edu.hbcit.utils.CalenderUtil;
+import cn.edu.hbcit.utils.UtilTools;
 
-public class SelectListenPlan extends HttpServlet {
-	protected final Logger log = Logger.getLogger(SelectListenPlan.class.getName());
+public class DeleteListenPlanById extends HttpServlet {
+
 	/**
 	 * Constructor of the object.
 	 */
-	public SelectListenPlan() {
+	public DeleteListenPlanById() {
 		super();
 	}
 
@@ -45,8 +40,7 @@ public class SelectListenPlan extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.doPost(request, response);
-		
+				this.doPost(request, response);
 	}
 
 	/**
@@ -62,30 +56,26 @@ public class SelectListenPlan extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html");
+		response.setContentType("text/html,charset=utf-8");
 		response.setCharacterEncoding("utf-8");
+		PrintWriter out=response.getWriter();
 		
-		ArrayList listenList=null;
-		ArrayList courseList=null;
+		String Pk_listen_plan=request.getParameter("id");//删除的编号
 		
-		HttpSession session=request.getSession();//创建session
-		
-		
-		ListenPlanDao lpd=new ListenPlanDao();//实例化类
-		CourseDao cd=new CourseDao();
-		CalenderUtil cu=new CalenderUtil();
-		
-		String PK_listen_plan=(String)cu.getSemester();//获取学期
-		courseList=cd.SelectCourseByTerms(PK_listen_plan);
-		listenList=lpd.selectListenPlan();
-		
-		log.debug("学期："+PK_listen_plan);
-		//HttpSession session=request.getSession();
-		//session.setAttribute("ListenPlanlist", list);
-		request.setAttribute("listenPlanList1", listenList);
-		request.setAttribute("courseList", courseList);
-		request.getRequestDispatcher("/2_1_5.jsp").forward(request,response);
-		
+		UtilTools ut = new UtilTools();
+		ListenPlanDao lpd=new ListenPlanDao();
+		boolean flag = false;
+	
+		if(ut.isNumeric(Pk_listen_plan)){
+			flag =lpd.deleteListenPlanById(Integer.parseInt(Pk_listen_plan));
+		}
+		if(flag){
+			out.print("success");
+		}
+		else{
+		out.print("fail");
+	
+		}
 	}
 
 	/**

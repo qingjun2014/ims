@@ -14,7 +14,13 @@ import org.apache.log4j.Logger;
 
 import cn.edu.hbcit.pojo.Course;
 import cn.edu.hbcit.servlet.SelectTeacherByCourse;
-
+	/**
+	 * 课程
+	 * @author 青君	
+	 * @version 1.0  
+	 * 创建时间：2014/6/19 22:35
+	 * 最后一次修改时间 ：2014/6/21  14:54
+	 * */
 public class CourseDao {
 	protected final Logger log = Logger.getLogger(CourseDao.class.getName());
 	/**

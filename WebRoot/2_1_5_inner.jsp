@@ -7,7 +7,6 @@
 <title>在线教学管理系统</title>
 <script type="text/javascript">
 function edit(){		
-
 			$.ajax({
 				url :"${pageContext.request.contextPath}/servlet/UpdateListenPlan",
 				type :'post',
@@ -39,7 +38,7 @@ function edit(){
 <body>
 <!-- 遮罩层 begin -->
 <form action="" method="post">
-<c:forEach items="${requestScope.listenPlanList}" var="temp1">
+<c:forEach items="${requestScope.listenPlanList2}" var="temp1">
 	<input type="hidden"  value="${temp1.PK_listen_plan}" id="pk" />
 <div id="xiugai" style="width:650px; height:130px; margin-left:20px;margin-top:20px;" >
 

@@ -75,7 +75,7 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
 			   });  
 		   }); 
    
-   //新增听课计划ajax函数
+ //新增听课计划ajax函数
 		function add(){		
 			$.ajax({
 				url :"${pageContext.request.contextPath}/servlet/AddListenPlanServlet",
@@ -104,7 +104,7 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
 });
 			
 		}
-		//根据课程查询讲师ajax
+//根据课程查询讲师ajax
 		function selectTeacher(){	
 		
 			$.ajax({
@@ -124,6 +124,33 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
 			}
 		});
 		}
+//删除记录by id
+		function del(id){
+	if(confirm("您真的想要删除吗?")){
+	$.ajax({
+			url :"${pageContext.request.contextPath}/servlet/DeleteListenPlanById",
+			type :'post',
+			data :'id='+id,
+			success :function(a){
+				var revalue=a.replace(/\r\n/g,'');
+					if(revalue=="success")
+						{
+							location.replace("${pageContext.request.contextPath}/servlet/SelectListenPlan");
+						}else{
+							alert("删除失败！")
+							window.location.reload();
+								
+					}
+				
+			}
+		});
+	
+	}
+		
+		}
+//验证听课表单元素的正确性。
+
+	
 </script>
 
 <% session.setAttribute("PK_listen_plan","${sessionScope.Semester}");%>
@@ -195,8 +222,8 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
                <table class="no-style" width="100%" >
 		          <tr>
 		            <td><span>课程名称：</span><select onchange="selectTeacher();" name="class" style="width:150px;" id="courseName" >
-		          <c:forEach items="${requestScope.courseList}" var="temp3">
-		              <option name="${temp3.course_name}" value="${temp3.course_name}" selected>${temp3.course_name}</option>
+		          <c:forEach items="${requestScope.courseList}" var="temp">
+		              <option name="${temp.course_name}" value="${temp.course_name}" selected>${temp.course_name}</option>
 		           </c:forEach>  
 		              </select></td>
 		           <!--   <OPTION  name="java" value="java">java</OPTION>
@@ -222,7 +249,7 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
                   <tr>
                    	 <td> </td>   
                   	 <td>  </td>
-                     <td> <input style="left:200px;" type="button" onclick="add();" class="btn btn-green" value="提交"/>   </td>
+                     <td> <input style="left:200px;" type="button" onclick="add();" class="btn btn-green big" value="提交"/>   </td>
                   </tr>
 	            </table>
 	      </form>
@@ -248,7 +275,7 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
 	              </tr>
 	            </thead>
 		        <tbody>
-		        	 <c:forEach items="${requestScope.ListenPlanList}" var="temp">                        
+		        	 <c:forEach items="${requestScope.listenPlanList1}" var="temp">                        
 						<tr>
 							<td class="center">${temp.FK_users_listener }</td>
 							<td class="center">${temp.FK_course_listen }</td>
@@ -258,7 +285,7 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
                             <td class="center">
                             
                                <a href="${pageContext.request.contextPath }/servlet/SelectListenPlanById?id=${temp.PK_listen_plan}" class="nyroModal" title="修改"> <img src="${pageContext.request.contextPath }/img/pencil.png" alt="Edit Meta" /></a>&nbsp; &nbsp; &nbsp; 
-                               <a href="?${temp.PK_listen_plan }" title="删除"><img src="${pageContext.request.contextPath }/img/cross.png" alt="Delete" /></a> 
+                               <a href="javascript:void(0);" onclick="del('${temp.PK_listen_plan}');" title="删除"><img src="${pageContext.request.contextPath }/img/cross.png" alt="Delete" /></a> 
                             </td>
 						</tr>
 					</c:forEach>                        

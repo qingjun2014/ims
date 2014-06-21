@@ -65,21 +65,22 @@ public class UpdateListenPlan extends HttpServlet {
 		UtilTools ut = new UtilTools();
 		boolean flag = false;
 		
-		String FK_course_listen=request.getParameter("courseName");//课程名
-		String listen_date=request.getParameter("date"); //时间
-		String classroom=request.getParameter("classroom"); //教室
-		String grade=request.getParameter("grade");//班级
-		String section=request.getParameter("jieci");//节次
-		String PK_listen_plan=request.getParameter("pk");
+		String FK_course_listen=request.getParameter("courseName");	//课程名
+		String listen_date=request.getParameter("date");	 //时间
+		String classroom=request.getParameter("classroom");	 //教室
+		String grade=request.getParameter("grade");			//班级
+		String section=request.getParameter("jieci");		//节次
+		String PK_listen_plan=request.getParameter("pk"); 	//编号
 		
 		log.debug("FK_course_listen:"+FK_course_listen);
 	
+		log.debug("listen_date:"+listen_date);
 		log.debug("classroom:"+classroom);
-	
 		log.debug("grade:"+grade);
 		log.debug("section:"+section);
 		log.debug("PK_listen_plan:"+PK_listen_plan);
 		ListenPlanDao lpd=new ListenPlanDao();
+		
 		if(ut.isNumeric(PK_listen_plan)){
 		flag=lpd.UpdateListenPlanById(FK_course_listen, section, classroom, grade, listen_date,Integer.parseInt(PK_listen_plan));
 		}

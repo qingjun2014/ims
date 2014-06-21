@@ -67,6 +67,11 @@
     <servlet-name>UpdateListenPlan</servlet-name>
     <servlet-class>cn.edu.hbcit.servlet.UpdateListenPlan</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>DeleteListenPlanById</servlet-name>
+    <servlet-class>cn.edu.hbcit.servlet.DeleteListenPlanById</servlet-class>
+  </servlet>
+
 
 
 
@@ -141,6 +146,10 @@
   <servlet-mapping>
     <servlet-name>UpdateListenPlan</servlet-name>
     <url-pattern>/servlet/UpdateListenPlan</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteListenPlanById</servlet-name>
+    <url-pattern>/servlet/DeleteListenPlanById</url-pattern>
   </servlet-mapping>
 	<filter>
 		<filter-name>DruidWebStatFilter</filter-name>

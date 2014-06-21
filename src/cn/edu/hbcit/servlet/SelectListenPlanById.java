@@ -79,7 +79,7 @@ public class SelectListenPlanById extends HttpServlet {
 		if(ut.isNumeric(id)){
 			listenPlanList=lpd.selectListenPlanById(Integer.parseInt(id));
 		}
-		request.setAttribute("listenPlanList", listenPlanList);
+		request.setAttribute("listenPlanList2", listenPlanList);
 		request.setAttribute("courseList", courseList);
 		request.getRequestDispatcher("/2_1_5_inner.jsp").forward(request, response);
 	}
