@@ -65,15 +65,16 @@ public class SelectTeacherByCourse extends HttpServlet {
 		CourseDao cd=new CourseDao();
 		HttpSession session=request.getSession();
 		
-		String course=request.getParameter("courseName");//课程名
+		String course=(String)request.getParameter("courseName");//课程名
 		log.debug("课程名："+course);
 		
-		String user_course=cd.SelectTeacherByCourse(course);//获取数据库中的教师姓名
+		String user_course=cd.SelectTeacherByCourse(course);//获取数据库tb_course(课程)表的教师姓名
 		log.debug("讲师："+user_course);
 		//request.setAttribute("teacher", user_course);
 		session.setAttribute("user_course", user_course);
-		out.println("success");
-	
+		out.println(user_course);
+		out.flush();
+		out.close();
 		
 		
 		

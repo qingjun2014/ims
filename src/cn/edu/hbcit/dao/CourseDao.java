@@ -13,6 +13,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.log4j.Logger;
 
 import cn.edu.hbcit.pojo.Course;
+import cn.edu.hbcit.pojo.Users;
 import cn.edu.hbcit.servlet.SelectTeacherByCourse;
 	/**
 	 * 课程
@@ -53,17 +54,17 @@ public class CourseDao {
 	 * 
 	 * */
 	public String SelectTeacherByCourse(String Course){
-		ArrayList<Course> list=null;
+		ArrayList<Users> list=null;
 		String usersCourse=null;
 		try {
 			Connection conn = Base.Connect();
-			Course course=new Course();
+			Users user=new Users();
 			QueryRunner qr = new QueryRunner();
-			String sql = "SELECT tb_course.FK_users_course FROM tb_course WHERE course_name=? "; 
+			String sql = "SELECT true_name FROM tb_course  join tb_users  on tb_users.PK_users=tb_course.FK_users_course where tb_course.course_name=? "; 
 			
-			list = (ArrayList<Course>)qr.query(conn, sql, new BeanListHandler(Course.class),Course);
-			for(Course a : list){
-				usersCourse=a.getFK_users_course();
+			list = (ArrayList<Users>)qr.query(conn, sql, new BeanListHandler(Users.class),Course);
+			for(Users a : list){
+				usersCourse=a.getTrue_name();
 				
 			}
 			log.debug("获取教师姓名成功！");
@@ -76,6 +77,5 @@ public class CourseDao {
 		
 		
 	}
-	
 	
 }

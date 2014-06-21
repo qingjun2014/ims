@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import cn.edu.hbcit.dao.CourseDao;
 import cn.edu.hbcit.dao.ListenPlanDao;
 import cn.edu.hbcit.utils.CalenderUtil;
 import cn.edu.hbcit.utils.UtilTools;
@@ -64,8 +65,10 @@ public class UpdateListenPlan extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		UtilTools ut = new UtilTools();
 		boolean flag = false;
+		boolean flag1=false;
 		
-		String FK_course_listen=request.getParameter("courseName");	//课程名
+		String FK_course_listen=(String)request.getParameter("coursename");	//课程名
+		String teacher=(String)request.getParameter("teacher"); //讲课人
 		String listen_date=request.getParameter("date");	 //时间
 		String classroom=request.getParameter("classroom");	 //教室
 		String grade=request.getParameter("grade");			//班级
@@ -73,18 +76,20 @@ public class UpdateListenPlan extends HttpServlet {
 		String PK_listen_plan=request.getParameter("pk"); 	//编号
 		
 		log.debug("FK_course_listen:"+FK_course_listen);
-	
+		log.debug("teacher:"+teacher);
 		log.debug("listen_date:"+listen_date);
 		log.debug("classroom:"+classroom);
 		log.debug("grade:"+grade);
 		log.debug("section:"+section);
 		log.debug("PK_listen_plan:"+PK_listen_plan);
+		
 		ListenPlanDao lpd=new ListenPlanDao();
 		
 		if(ut.isNumeric(PK_listen_plan)){
+			
 		flag=lpd.UpdateListenPlanById(FK_course_listen, section, classroom, grade, listen_date,Integer.parseInt(PK_listen_plan));
 		}
-		if(flag){
+		if(flag==true ){
 			out.print("success");
 		}else{;
 			out.print("fail");

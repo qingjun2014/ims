@@ -14,6 +14,7 @@ public class Listen_plan {
 	private String classroom;
 	private String classes;
 	private int FK_terms_listen;
+	private String true_name;//任课教师
 	public int getPK_listen_plan() {
 		return PK_listen_plan;
 	}
@@ -62,6 +63,13 @@ public class Listen_plan {
 	public void setFK_terms_listen(int fKTermsListen) {
 		FK_terms_listen = fKTermsListen;
 	}
+	public String getTrue_name() {
+		return true_name;
+	}
+	public void setTrue_name(String trueName) {
+		true_name = trueName;
+	}
+	
 	
 
 }

@@ -10,8 +10,9 @@ function edit(){
 			$.ajax({
 				url :"${pageContext.request.contextPath}/servlet/UpdateListenPlan",
 				type :'post',
-				data : 'courseName='+$("#courseName").val()+
+				data :'coursename='+$("#coursename").val()+
 					  '&classroom='+$("#classroom01").attr("value")+
+					  '&teacher='+$("#teacher2").attr("value")+
 					  '&date='+$("#date01").attr("value")+
 					  '&jieci='+$("#jieci01").val()+
 					  '&grade='+$("#grade01").attr("value")+
@@ -32,7 +33,21 @@ function edit(){
 });
 			
 		}
-
+//根据课程查询讲师ajax
+		function queryTeacher(){	
+		
+			$.ajax({
+			url :"${pageContext.request.contextPath}/servlet/SelectTeacherByCourse",
+			type :'post',
+			data :'courseName='+$("#coursename").val(),
+			success :function(b){
+				var revalue=b.replace(/\r\n/g,'');
+					var teacher2=document.getElementById("teacher2");
+					teacher2.value=revalue;
+				
+			}
+		});
+		}
 </script>
 </head>
 <body>
@@ -40,18 +55,19 @@ function edit(){
 <form action="" method="post">
 <c:forEach items="${requestScope.listenPlanList2}" var="temp1">
 	<input type="hidden"  value="${temp1.PK_listen_plan}" id="pk" />
+	"
 <div id="xiugai" style="width:650px; height:130px; margin-left:20px;margin-top:20px;" >
 
   <table class="no-style" width="100%" >
     <tr>
       <td align="center"><span>课程名称：</span>
-        <select  name="class" style="width:150px;" id="coursename">
+        <select  name="class" style="width:150px;" id="coursename" onclick="queryTeacher();">
         <c:forEach items="${requestScope.courseList}" var="temp2">
         	<c:if test="${temp1.FK_course_listen == temp2.course_name }">
-       			   <option name="${temp1.PK_listen_plan}" value="${temp1.PK_listen_plan}" selected>${temp1.FK_course_listen}</option>
+       			   <option name="${temp1.FK_course_listen}" value="${temp1.FK_course_listen}" selected>${temp1.FK_course_listen}</option>
        	 </c:if>
        	 <c:if test="${temp1.FK_course_listen != temp2.course_name }">
-       			   <option name="${temp2.course_code }" value="${temp2.course_code }">${temp2.course_name }</option>
+       			   <option name="${temp2.course_name }" value="${temp2.course_name }">${temp2.course_name }</option>
        	 </c:if>
          </c:forEach>
         </select></td>
@@ -60,7 +76,7 @@ function edit(){
         <input type="text" name="grade"  id="grade01" value="${temp1.classes }">
       </td>
        <td>
-        
+      <input type="hidden" name="teacher2"  id="teacher2"  value="${temp1.true_name }">
         </td>
     </tr>
     <tr>

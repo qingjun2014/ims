@@ -46,7 +46,7 @@ public class ListenPlanDao {
 			String	sql="INSERT INTO tb_listen_plan(FK_users_listener, section, FK_course_listen, listen_date, classroom, classes, FK_terms_listen)VALUES(?,?,?,?,?,?,?)";
 			count = qr.update(conn, sql, FK_users_listener, section, FK_course_listen, listen_date, classroom ,grade, FK_terms_listen);
 			
-			log.debug("插入行数"+count);
+			log.debug("听课表插入行数"+count);
 			DbUtils.closeQuietly(conn);//关闭连接
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -59,7 +59,7 @@ public class ListenPlanDao {
 	}
 	
 	/**
-	 * 查询听课表中的记录
+	 * 查询听课表中的记录和课程表课程名称、任课老师
 	 * @return
 	 * */
 	public ArrayList selectListenPlan(){
@@ -68,7 +68,7 @@ public class ListenPlanDao {
 		Connection conn = Base.Connect();
 		Listen_plan listplan=new Listen_plan();
 		QueryRunner qr = new QueryRunner();
-		String sql ="SELECT tb_listen_plan.PK_listen_plan,tb_listen_plan.FK_users_listener,tb_listen_plan.section ,tb_listen_plan.FK_course_listen, tb_listen_plan.listen_date,tb_listen_plan.classes, tb_listen_plan.classroom FROM tb_listen_plan ORDER BY PK_listen_plan DESC ";
+		String sql ="SELECT tb_listen_plan.PK_listen_plan,tb_listen_plan.FK_users_listener,tb_listen_plan.section ,tb_listen_plan.FK_course_listen, tb_listen_plan.listen_date,tb_listen_plan.classes, tb_listen_plan.classroom,tb_users.true_name FROM  tb_course  join tb_listen_plan on  tb_listen_plan.FK_course_listen = tb_course.course_name  join tb_users on tb_course.FK_users_course=tb_users.PK_users ORDER BY tb_listen_plan.listen_date DESC  ";
 	
 		list = (ArrayList<Listen_plan>)qr.query(conn, sql, new BeanListHandler(Listen_plan.class));
 		log.debug("听课表记录___查询成功");
@@ -117,24 +117,27 @@ public class ListenPlanDao {
 	 * @return
 	 * */
 	public boolean UpdateListenPlanById(String FK_course_listen,String section, String classroom, String grade, String listen_date,int PK_listen_plan){
-		int count = 0;
+		int count1 = 0;
+		
 	boolean flag = false;
 	try {
 		Connection conn = Base.Connect();
 		QueryRunner qr = new QueryRunner();
 		String sql = "UPDATE tb_listen_plan SET  FK_course_listen=? , section=? , classroom=? , listen_date=? , classes=?  WHERE PK_listen_plan=? ";
 	
-		count = qr.update(conn, sql, FK_course_listen,section,classroom,listen_date,grade,PK_listen_plan);
+		count1 = qr.update(conn, sql, FK_course_listen,section,classroom,listen_date,grade,PK_listen_plan);
+	
+		log.debug( count1+"个听课计划修改成功 ");
 		
-		log.debug( count+"个听课计划修改成功 ");
+		if(count1> 0){
+			flag = true;
+		}
 		DbUtils.closeQuietly(conn);//关闭连接
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	if(count>0){
-		flag = true;
-	}
+	
 	return flag;
 }
 	/**

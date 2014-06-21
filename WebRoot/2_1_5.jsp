@@ -81,12 +81,11 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
 				url :"${pageContext.request.contextPath}/servlet/AddListenPlanServlet",
 				type :'post',
 				data :'courseName='+$("#courseName").val()+
-					'&teacher='+$("#teacher").attr("value")+
+					'&userListen='+$("#userListen").attr("value")+
 					'&classroom='+$("#classroom").attr("value")+
 					'&date='+$("#date").attr("value")+
 					'&jieci='+$("#jieci").val()+
-					'&grade='+$("#grade").attr("value"),
-					
+					'&grade='+$("#grade").attr("value"),		
 				success:function(mm){
 				var revalue=mm.replace(/\r\n/g,'');
 				if(revalue=="success")
@@ -112,14 +111,10 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
 			type :'post',
 			data :'courseName='+$("#courseName").val(),
 			success :function(a){
-				var revalue=a.replace(/\r\n/g,'');
-					if(revalue=="success")
-						{
-						
+				var revalue=a.replace(/\r\n/g,'');	
 						var teacher=document.getElementById("teacher");
-						teacher.value="星星";
+						teacher.value=revalue;
 						
-						}
 				
 			}
 		});
@@ -153,7 +148,7 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
 	
 </script>
 
-<% session.setAttribute("PK_listen_plan","${sessionScope.Semester}");%>
+
 </head>
 
 <body>
@@ -201,6 +196,7 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
  <fieldset>
    <legend>听课计划</legend>
 		    <form id="sampleform" method="post" action="#">
+		    <input type="hidden" value="${sessionScope.username}" name="${sessionScope.username}" id="userListen"/>
 		        <table class="no-style" width="100%">
 		      
 		          <tr>
@@ -221,16 +217,16 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
            <form action="" method="post" >
                <table class="no-style" width="100%" >
 		          <tr>
-		            <td><span>课程名称：</span><select onchange="selectTeacher();" name="class" style="width:150px;" id="courseName" >
-		          <c:forEach items="${requestScope.courseList}" var="temp">
-		              <option name="${temp.course_name}" value="${temp.course_name}" selected>${temp.course_name}</option>
+		            <td><span>课程名称：</span><select onclick="selectTeacher();" name="class" style="width:150px;" id="courseName" >
+		          <c:forEach items="${requestScope.courseList}" var="temp1">
+		              <option name="${temp1.course_name}" value="${temp1.course_name}" selected>${temp1.course_name}</option>
 		           </c:forEach>  
 		              </select></td>
 		           <!--   <OPTION  name="java" value="java">java</OPTION>
 		              <OPTION  name="jsp" value="jsp">jsp</OPTION>
 		              <OPTION  name="c" value="c">c</OPTION>-->
 		              &nbsp;&nbsp;
-                       <td><span>讲课人：</span> &nbsp;&nbsp;<input type="text" name="teacher"  id="teacher" readonly value="李伟"> </td>
+                       <td><span>讲课人：</span> &nbsp;&nbsp;<input type="text" name="teacher"  id="teacher" readonly value=""> </td>
 		              <td><span>班级：</span> &nbsp;&nbsp;<input type="text" name="grade"  id="grade"> </td>
 		        
 	              </tr>           
@@ -262,7 +258,7 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
   <fieldset> 
   <legend>历年听课计划</legend>
  
-		 <div class="box">    
+		<!--  <div class="box">     -->
 		      <table class="display stylized" id="example">
 		        <thead>
 		          <tr>
@@ -275,17 +271,17 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
 	              </tr>
 	            </thead>
 		        <tbody>
-		        	 <c:forEach items="${requestScope.listenPlanList1}" var="temp">                        
+		        	 <c:forEach items="${requestScope.listenPlanList1}" var="temp2">                        
 						<tr>
-							<td class="center">${temp.FK_users_listener }</td>
-							<td class="center">${temp.FK_course_listen }</td>
-							<td class="center">${temp.listen_date }----${temp.section }</td>
-							<td class="center">${temp.classroom }</td>
-							<td class="center">${temp.classes }</td>
+							<td class="center">${temp2.true_name}</td>
+							<td class="center">${temp2.FK_course_listen }</td>
+							<td class="center">${temp2.listen_date }----${temp2.section }</td>
+							<td class="center">${temp2.classroom }</td>
+							<td class="center">${temp2.classes }</td>
                             <td class="center">
                             
-                               <a href="${pageContext.request.contextPath }/servlet/SelectListenPlanById?id=${temp.PK_listen_plan}" class="nyroModal" title="修改"> <img src="${pageContext.request.contextPath }/img/pencil.png" alt="Edit Meta" /></a>&nbsp; &nbsp; &nbsp; 
-                               <a href="javascript:void(0);" onclick="del('${temp.PK_listen_plan}');" title="删除"><img src="${pageContext.request.contextPath }/img/cross.png" alt="Delete" /></a> 
+                               <a href="${pageContext.request.contextPath }/servlet/SelectListenPlanById?id=${temp2.PK_listen_plan}" class="nyroModal" title="修改"> <img src="${pageContext.request.contextPath }/img/pencil.png" alt="Edit Meta" /></a>&nbsp; &nbsp; &nbsp; 
+                               <a href="javascript:void(0);" onclick="del('${temp2.PK_listen_plan}');" title="删除"><img src="${pageContext.request.contextPath }/img/cross.png" alt="Delete" /></a> 
                             </td>
 						</tr>
 					</c:forEach>                        
@@ -296,7 +292,8 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
       </section>	
 	</div>
 	<!-- End of Wrapper -->
-	</div>
+	
+	<!-- </div> -->
 	
 
 	

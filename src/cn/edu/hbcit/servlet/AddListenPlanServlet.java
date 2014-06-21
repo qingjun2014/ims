@@ -64,8 +64,8 @@ public class AddListenPlanServlet extends HttpServlet {
 		boolean flag = false;
 		String FK_course_listen=request.getParameter("courseName");//课程名
 		
-		//String FK_users_listener=request.getParameter("teacher");//听课人
-		String FK_users_listener="李伟";
+		String FK_users_listener=request.getParameter("userListen");//听课人
+	
 		String listen_date=request.getParameter("date"); //时间
 		String classroom=request.getParameter("classroom"); //教室
 		String jieci=request.getParameter("jieci");//节次
@@ -73,7 +73,8 @@ public class AddListenPlanServlet extends HttpServlet {
 		int FK_terms_listen=1; //学期
 		
 		log.debug("FK_course_listen:"+FK_course_listen);
-		log.debug("teacher :"+FK_users_listener);
+		log.debug("FK_users_listener :"+FK_users_listener);
+		
 		log.debug("listen_date:"+listen_date);
 		log.debug("classroom:"+classroom);
 		log.debug("jieci:"+jieci);
