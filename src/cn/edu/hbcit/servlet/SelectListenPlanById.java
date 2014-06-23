@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -68,9 +69,9 @@ public class SelectListenPlanById extends HttpServlet {
 		ArrayList courseList=null;
 		ListenPlanDao lpd=new ListenPlanDao();
 		CourseDao cd=new CourseDao();
-		CalenderUtil cu=new CalenderUtil();
+		HttpSession session=request.getSession();
 		
-		String PK_listen_plan=(String)cu.getSemester();//获取学期
+		String PK_listen_plan=(String)session.getAttribute("Semester");//获取学期
 		courseList=cd.SelectCourseByTerms(PK_listen_plan);
 		
 		String id = request.getParameter("id");//获取id

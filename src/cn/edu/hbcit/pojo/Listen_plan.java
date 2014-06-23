@@ -14,7 +14,7 @@ public class Listen_plan {
 	private String classroom;
 	private String classes;
 	private int FK_terms_listen;
-	private String true_name;//任课教师
+	private String true_name;//任课教师的真实姓名——来自于用户表
 	public int getPK_listen_plan() {
 		return PK_listen_plan;
 	}

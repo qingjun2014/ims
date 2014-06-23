@@ -198,14 +198,14 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
 		    <form id="sampleform" method="post" action="#">
 		    <input type="hidden" value="${sessionScope.username}" name="${sessionScope.username}" id="userListen"/>
 		        <table class="no-style" width="100%">
-		      
+		      	<c:forEach items="${sessionScope.majorList1}" var="temp3">
 		          <tr>
-		            <td><span class="label label-gray">专业名称</span> &nbsp;&nbsp;软件技术</td>
-		            <td><span class="label label-gray">专业代码</span> &nbsp;&nbsp; 590108</td>
-		            <td><span class="label label-gray">学制</span> &nbsp;&nbsp; 三年</td>
+		            <td><span class="label label-gray">专业名称</span> &nbsp;&nbsp;${temp3.major_name }</td>
+		            <td><span class="label label-gray">专业代码</span> &nbsp;&nbsp; ${temp3.major_code }</td>
+		            <td><span class="label label-gray">学制</span> &nbsp;&nbsp; ${temp3.years }</td>
 		            <td><span class="label label-gray" >当前学期</span> &nbsp;&nbsp; ${sessionScope.Semester}</td>
 	              </tr>
-	            
+	            </c:forEach>
 	            </table>    
 	        </form>
         </fieldset>   
@@ -218,6 +218,7 @@ Default colour scheme is blue. Uncomment prefered stylesheet to use it.
                <table class="no-style" width="100%" >
 		          <tr>
 		            <td><span>课程名称：</span><select onclick="selectTeacher();" name="class" style="width:150px;" id="courseName" >
+
 		          <c:forEach items="${requestScope.courseList}" var="temp1">
 		              <option name="${temp1.course_name}" value="${temp1.course_name}" selected>${temp1.course_name}</option>
 		           </c:forEach>  

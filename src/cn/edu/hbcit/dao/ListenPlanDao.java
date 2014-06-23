@@ -94,7 +94,7 @@ public class ListenPlanDao {
 		Connection conn = Base.Connect();
 		Listen_plan listplan=new Listen_plan();
 		QueryRunner qr = new QueryRunner();
-		String sql ="SELECT tb_listen_plan.PK_listen_plan, tb_listen_plan.FK_course_listen, tb_listen_plan.listen_date,tb_listen_plan.classes, tb_listen_plan.classroom FROM tb_listen_plan WHERE PK_listen_plan=? ";
+		String sql ="SELECT tb_listen_plan.PK_listen_plan,tb_listen_plan.section, tb_listen_plan.FK_course_listen, tb_listen_plan.listen_date,tb_listen_plan.classes, tb_listen_plan.classroom FROM tb_listen_plan WHERE PK_listen_plan=? ";
 	
 		list = (ArrayList<Listen_plan>)qr.query(conn, sql, new BeanListHandler(Listen_plan.class),id);
 		log.debug("查询听课记录 By id="+id);

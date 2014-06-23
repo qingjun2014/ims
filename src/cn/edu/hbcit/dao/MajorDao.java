@@ -55,7 +55,28 @@ public class MajorDao {
 		}
 		return list;
 	}
-	
+	/**
+	 * 根据用户查询专业信息
+	 * @param PK_users
+	 * 
+	 * */
+	public ArrayList selectMajorsByUsers(String FK_users_majors){
+		ArrayList<Majors> list = null;
+		try {
+			Connection conn = Base.Connect();
+			Majors majors = new Majors();
+			QueryRunner qr = new QueryRunner();
+			String sql = "SELECT * FROM tb_majors WHERE FK_users_majors =?";
+		
+			list = (ArrayList<Majors>)qr.query(conn, sql, new BeanListHandler(Majors.class),FK_users_majors);
+			log.debug("根据用户查询专业信息成功！");
+			DbUtils.closeQuietly(conn);//关闭连接
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
 	/**
 	 * 新增专业
 	 * @param major_name

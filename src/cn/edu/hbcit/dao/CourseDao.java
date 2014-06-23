@@ -3,6 +3,7 @@ package cn.edu.hbcit.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -13,6 +14,7 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.log4j.Logger;
 
 import cn.edu.hbcit.pojo.Course;
+import cn.edu.hbcit.pojo.Majors;
 import cn.edu.hbcit.pojo.Users;
 import cn.edu.hbcit.servlet.SelectTeacherByCourse;
 	/**
@@ -76,6 +78,19 @@ public class CourseDao {
 			return usersCourse;
 		
 		
+	}
+	public List<Majors> getMajorList(String FK_users_majors) {
+		List<Majors> list = null;
+		try {
+		Connection	conn = Base.Connect();
+			QueryRunner qr = new QueryRunner();
+			String sql="SELECT * FROM tb_majors WHERE FK_users_majors =?" ;
+			list = (List<Majors>) qr.query(conn,sql,new BeanListHandler(Majors.class), FK_users_majors);
+
+		} catch (Exception e) {
+			throw new RuntimeException("专业查询错误!");
+		}
+		return list;
 	}
 	
 }

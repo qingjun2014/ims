@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 
 import cn.edu.hbcit.dao.CourseDao;
 import cn.edu.hbcit.dao.ListenPlanDao;
+import cn.edu.hbcit.dao.MajorDao;
 import cn.edu.hbcit.utils.CalenderUtil;
 
 public class SelectListenPlan extends HttpServlet {
@@ -64,26 +65,29 @@ public class SelectListenPlan extends HttpServlet {
 
 		response.setContentType("text/html");
 		response.setCharacterEncoding("utf-8");
-		
 		ArrayList listenList=null;
 		ArrayList courseList=null;
-		
+		ArrayList majorList=null;
 		HttpSession session=request.getSession();//创建session
 		
 		
 		ListenPlanDao lpd=new ListenPlanDao();//实例化类
 		CourseDao cd=new CourseDao();
-		CalenderUtil cu=new CalenderUtil();
+	
+		MajorDao md=new MajorDao();
+		String FK_users_majors=(String)session.getAttribute("username"); //获取用户
+		majorList=md.selectMajorsByUsers(FK_users_majors);
 		
-		String PK_listen_plan=(String)cu.getSemester();//获取学期
+		String PK_listen_plan=(String)session.getAttribute("Semester");//获取学期
+		
 		courseList=cd.SelectCourseByTerms(PK_listen_plan);
 		listenList=lpd.selectListenPlan();
 		
-		log.debug("学期："+PK_listen_plan);
-		//HttpSession session=request.getSession();
-		//session.setAttribute("ListenPlanlist", list);
+		log.debug("查询听课计划表 by学期："+PK_listen_plan);
+		log.debug("当前登录用户："+FK_users_majors);
 		request.setAttribute("listenPlanList1", listenList);
 		request.setAttribute("courseList", courseList);
+		session.setAttribute("majorList1", majorList);
 		request.getRequestDispatcher("/2_1_5.jsp").forward(request,response);
 		
 	}
